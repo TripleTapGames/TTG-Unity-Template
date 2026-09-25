@@ -1,0 +1,26 @@
+{
+  "dependencies": {
+    "com.applovin.mediation.ads": "8.6.6",
+    "com.cysharp.unitask": "https://github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask#2.5.11",
+    "com.gameanalytics.sdk": "8.2.0",
+    "singular-unity-package": "https://github.com/singular-labs/Singular-Unity-SDK.git#5.10.1",
+    "com.google.external-dependency-manager": "1.2.189",
+    "com.unity.purchasing": "4.14.0",
+    "com.unity.test-framework": "1.1.33",
+    "com.unity.ugui": "1.0.0",
+    "com.unity.modules.androidjni": "1.0.0",
+    "com.unity.modules.animation": "1.0.0",
+    "com.unity.modules.audio": "1.0.0",
+    "com.unity.modules.imgui": "1.0.0",
+    "com.unity.modules.jsonserialize": "1.0.0",
+    "com.unity.modules.physics": "1.0.0",
+    "com.unity.modules.physics2d": "1.0.0",
+    "com.unity.modules.unitywebrequest": "1.0.0",
+    "com.unity.modules.unitywebrequesttexture": "1.0.0"
+  },
+  "scopedRegistries": [
+    {"name":"AppLovin MAX","url":"https://unity.packages.applovin.com/","scopes":["com.applovin.mediation.ads","com.applovin.mediation.adapters","com.applovin.mediation.dsp"]},
+    {"name":"OpenUPM","url":"https://package.openupm.com","scopes":["com.gameanalytics","com.google.external-dependency-manager"]}
+  ],
+  "testables": ["com.tripletapgames.foundation"]
+}
