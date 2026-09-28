@@ -7,7 +7,7 @@ A separate, empty Unity project for starting new games. Open with Unity **2022.3
 1. In Unity Hub, choose Add project from disk and select this folder.
 2. Let Unity finish importing and downloading packages. Internet access and Git are needed on a fresh machine.
 3. In Player Settings, change the company name, product name and Android/iOS application identifiers.
-4. Open **Tools > Triple Tap Games > Project Setup**. On a clone, install Firebase separately if needed, following the [Firebase installation guide](https://github.com/TripleTapGames/TTG-Unity-Foundation/blob/v0.1.1/Documentation~/FirebaseInstallation.md). Import Analytics and Crashlytics 13.13.0, then click **Refresh Firebase Adapter** and wait for compilation. Locate/create blank configuration assets, enter that game's settings, enable the services you need, and run validation.
+4. Open **Tools > Triple Tap Games > Project Setup**. On a clone, install Firebase separately if needed, following the [Firebase installation guide](https://github.com/TripleTapGames/TTG-Unity-Foundation/blob/v0.1.2/Documentation~/FirebaseInstallation.md). Import Analytics and Crashlytics 13.13.0, then click **Refresh Firebase Adapter** and wait for compilation. Locate/create blank configuration assets, enter that game's settings, enable the services you need, and run validation.
 5. Click **Create / Update Local Loading Scene**. Loading is generated locally because it can contain project credentials and is intentionally excluded from Git.
 6. Click **Create / Update Base Game Flow**. The committed Core scene contains the reusable flow, and the action repairs its Win/Lose UI, button EventSystem, Build Settings order and default level-sequence asset.
 7. Assign ordered level prefabs and stable IDs in `Assets/Game/Config/DefaultLevelSequence.asset`. Gameplay reports outcomes through `TTGGameFlow.Instance.WinLevel()` or `LoseLevel()`.
@@ -25,7 +25,7 @@ SDK installation does not activate services. Foundation integrations default to 
 | GameAnalytics | 8.2.0, OpenUPM |
 | Singular | 5.10.1, pinned official Git tag |
 | Unity IAP | 4.14.0, Unity registry |
-| Facebook | Existing 17.x asset SDK, without Pop Sort settings; not upgraded to 18.1.0 |
+| Facebook | 17.0.0 local asset import |
 | DOTween | Existing Demigiant asset import; version not independently verified |
 | External Dependency Manager | 1.2.189, OpenUPM |
 
@@ -35,7 +35,7 @@ Package resolution is recorded in `Packages/packages-lock.json`. Do not install 
 
 Blank local configs are under `Assets/TTGGenerated/Resources/TTG`, which is ignored by Git. After cloning without this ignored folder, create configs from the Project Setup window. Never commit populated vendor settings or Firebase project files. Runtime SDK keys included in client builds are not server secrets; privileged credentials belong on your backend.
 
-The foundation package is downloaded from the immutable Git tag `v0.1.1` in the public [TTG-Unity-Foundation repository](https://github.com/TripleTapGames/TTG-Unity-Foundation). The [complete Foundation user guide](https://github.com/TripleTapGames/TTG-Unity-Foundation/blob/v0.1.1/Documentation~/UserGuide.md) covers installation and runtime APIs. To upgrade, change only its tag in `Packages/manifest.json`, let Unity update `packages-lock.json`, and validate the project. An Editor compilation and its existing EditMode tests do not prove live vendor behavior. Device ads, purchases, attribution, consent behavior, native Android/iOS builds, and Unity 6 compatibility require separate validation before shipping.
+The foundation package is downloaded from the immutable Git tag `v0.1.2` in the public [TTG-Unity-Foundation repository](https://github.com/TripleTapGames/TTG-Unity-Foundation). The [complete Foundation user guide](https://github.com/TripleTapGames/TTG-Unity-Foundation/blob/v0.1.2/Documentation~/UserGuide.md) covers installation and runtime APIs. To upgrade, change only its tag in `Packages/manifest.json`, let Unity update `packages-lock.json`, and validate the project. An Editor compilation and its existing EditMode tests do not prove live vendor behavior. Device ads, purchases, attribution, consent behavior, native Android/iOS builds, and Unity 6 compatibility require separate validation before shipping.
 
 The original Pop Sort project is separate and has not been migrated into this project.
 
