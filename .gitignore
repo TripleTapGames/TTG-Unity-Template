@@ -80,9 +80,3 @@ crashlytics-build.properties
 /[Aa]ssets/[Aa]ddressable[Aa]ssets[Dd]ata/*/*.bin*
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
-
-# Unity package samples/docs intentionally end in ~; override global *~ rules.
-!/Packages/com.tripletapgames.foundation/Samples~/
-!/Packages/com.tripletapgames.foundation/Samples~/**
-!/Packages/com.tripletapgames.foundation/Documentation~/
-!/Packages/com.tripletapgames.foundation/Documentation~/**
