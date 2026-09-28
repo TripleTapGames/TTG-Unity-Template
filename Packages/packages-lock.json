@@ -34,7 +34,9 @@
       "version": "file:com.tripletapgames.foundation",
       "depth": 0,
       "source": "embedded",
-      "dependencies": {}
+      "dependencies": {
+        "com.unity.ugui": "1.0.0"
+      }
     },
     "com.unity.ext.nunit": {
       "version": "1.0.6",

@@ -75,7 +75,10 @@ namespace TripleTapGames.Foundation
 
             foreach (var service in TTGServiceRegistry.Global.Services)
             {
-                if (service is ITTGConsentAdapter adapter)
+                // Some vendor consent APIs construct or access their native singleton.
+                // Before initialization we only store the normalized TTG state; each
+                // adapter applies that state as part of its own initialization.
+                if (service.IsInitialized && service is ITTGConsentAdapter adapter)
                 {
                     try
                     {
@@ -95,6 +98,7 @@ namespace TripleTapGames.Foundation
         internal static void ResetForTests()
         {
             state = new TTGConsentState();
+            PlayerPrefs.DeleteKey(PlayerPrefsKey);
         }
     }
 }

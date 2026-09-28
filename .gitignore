@@ -8,6 +8,10 @@
 *.sln
 .DS_Store
 /Assets/TTGGenerated/
+/Assets/Scenes/Loading.unity
+/Assets/Scenes/Loading.unity.meta
+/Assets/Resources/GameAnalytics/Settings.asset
+/Assets/Resources/GameAnalytics/Settings.asset.meta
 /Assets/google-services.json*
 /Assets/GoogleService-Info.plist*
 /Assets/StreamingAssets/google-services-desktop.json*

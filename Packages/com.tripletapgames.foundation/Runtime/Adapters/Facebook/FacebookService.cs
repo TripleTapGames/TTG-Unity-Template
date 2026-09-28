@@ -45,6 +45,8 @@ namespace TripleTapGames.Foundation.Adapters.Facebook
             }
             FB.ActivateApp();
             IsInitialized = true;
+            FB.Mobile.SetAdvertiserTrackingEnabled(
+                TTGPrivacy.State.Tracking == TTGTrackingAuthorizationStatus.Authorized);
             TTGAnalytics.RegisterProvider(this);
             initialization.TrySetResult(TTGInitializationResult.Successful(ServiceName));
         }

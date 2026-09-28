@@ -5,7 +5,9 @@
   "description": "Shared initialization, analytics, ads, attribution, privacy, purchasing, validation, and build infrastructure for Triple Tap Games.",
   "unity": "2022.3",
   "author": { "name": "Triple Tap Games" },
-  "dependencies": {},
+  "dependencies": {
+    "com.unity.ugui": "1.0.0"
+  },
   "keywords": ["ttg", "analytics", "ads", "iap"],
   "samples": [
     {

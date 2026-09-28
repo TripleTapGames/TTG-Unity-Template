@@ -50,6 +50,24 @@ namespace TripleTapGames.Foundation
         }
     }
 
+    public readonly struct TTGInitializationProgress
+    {
+        public int CompletedServices { get; }
+        public int TotalServices { get; }
+        public float NormalizedProgress => TotalServices == 0 ? 0f : (float)CompletedServices / TotalServices;
+        public string ServiceName { get; }
+        public TTGInitializationStatus Status { get; }
+
+        internal TTGInitializationProgress(int completedServices, int totalServices, string serviceName,
+            TTGInitializationStatus status)
+        {
+            CompletedServices = completedServices;
+            TotalServices = totalServices;
+            ServiceName = serviceName ?? string.Empty;
+            Status = status;
+        }
+    }
+
     public sealed class TTGServiceContext
     {
         public TTGProjectConfig ProjectConfig { get; }

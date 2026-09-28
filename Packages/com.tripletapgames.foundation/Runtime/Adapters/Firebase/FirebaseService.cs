@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using Firebase;
@@ -31,6 +32,13 @@ namespace TripleTapGames.Foundation.Adapters.Firebase
             if (IsInitialized) return TTGInitializationResult.Successful(ServiceName);
             analyticsEnabled = context.ProjectConfig.Firebase.AnalyticsEnabled;
             crashlyticsEnabled = context.ProjectConfig.Firebase.CrashlyticsEnabled;
+#if UNITY_EDITOR
+            var streamingAssets = Path.Combine(Application.dataPath, "StreamingAssets");
+            if (!File.Exists(Path.Combine(streamingAssets, "google-services-desktop.json"))
+                && !File.Exists(Path.Combine(streamingAssets, "google-services.json")))
+                return new TTGInitializationResult(ServiceName, TTGInitializationStatus.Failure,
+                    "Firebase Editor options are missing. Add this game's Firebase configuration file, let Firebase generate StreamingAssets options, then try again.");
+#endif
             var status = await FirebaseApp.CheckAndFixDependenciesAsync();
             cancellationToken.ThrowIfCancellationRequested();
             if (status != DependencyStatus.Available)

@@ -11,6 +11,7 @@ namespace TripleTapGames.Foundation.Editor
             if (config == null) return;
             ApplyFacebook(config);
             ApplyAppLovin(config);
+            TTGConfigurationHooks.Apply(config);
             // Singular is configured by its runtime adapter; never edit package prefabs.
             AssetDatabase.SaveAssets();
         }

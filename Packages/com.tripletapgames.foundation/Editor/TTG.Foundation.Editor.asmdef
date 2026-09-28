@@ -1,7 +1,7 @@
 {
   "name": "TTG.Foundation.Editor",
   "rootNamespace": "TripleTapGames.Foundation.Editor",
-  "references": ["TTG.Foundation.Runtime"],
+  "references": ["TTG.Foundation.Runtime", "UnityEngine.UI"],
   "includePlatforms": ["Editor"],
   "autoReferenced": true,
   "noEngineReferences": false

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using UnityEngine;
 
 namespace TripleTapGames.Foundation
 {
@@ -15,7 +16,9 @@ namespace TripleTapGames.Foundation
 
         public static bool IsInitialized { get; private set; }
         public static bool IsInitializing { get; private set; }
+        public static TTGInitializationProgress CurrentProgress { get; private set; }
         public static event Action OnInitialized;
+        public static event Action<TTGInitializationProgress> OnProgressChanged;
 
         public static UniTask<TTGInitializationReport> InitializeAsync(CancellationToken cancellationToken = default)
         {
@@ -53,13 +56,24 @@ namespace TripleTapGames.Foundation
             IsInitializing = true;
             var results = new List<TTGInitializationResult>();
             var overall = TTGInitializationStatus.Success;
+            var totalServices = 0;
 
             try
             {
+                if (projectConfig != null)
+                {
+                    foreach (var registeredService in registry.Services)
+                    {
+                        if (registeredService.IsEnabled(projectConfig)) totalServices++;
+                    }
+                }
+                ReportProgress(0, totalServices, string.Empty, TTGInitializationStatus.Skipped);
+
                 if (projectConfig == null)
                 {
                     overall = TTGInitializationStatus.Failure;
                     results.Add(new TTGInitializationResult("Configuration", overall, "TTGProjectConfig was not found."));
+                    ReportProgress(1, 1, "Configuration", overall);
                     return lastReport = new TTGInitializationReport(results, overall);
                 }
 
@@ -68,6 +82,7 @@ namespace TripleTapGames.Foundation
                 var context = new TTGServiceContext(projectConfig, adsConfig);
                 lastContext = context;
                 lastRegistry = registry;
+                var completedServices = 0;
 
                 foreach (var service in registry.Services)
                 {
@@ -80,8 +95,10 @@ namespace TripleTapGames.Foundation
 
                     if (service.RequiresConsent && !TTGPrivacy.HasResolvedConsent)
                     {
-                        results.Add(new TTGInitializationResult(service.ServiceName, TTGInitializationStatus.Deferred, "Waiting for host-provided consent."));
+                        var deferred = new TTGInitializationResult(service.ServiceName, TTGInitializationStatus.Deferred, "Waiting for host-provided consent.");
+                        results.Add(deferred);
                         overall = TTGInitializationStatus.Warning;
+                        ReportProgress(++completedServices, totalServices, service.ServiceName, deferred.Status);
                         continue;
                     }
 
@@ -96,6 +113,7 @@ namespace TripleTapGames.Foundation
                     }
 
                     results.Add(result);
+                    ReportProgress(++completedServices, totalServices, service.ServiceName, result.Status);
                     if (result.Status == TTGInitializationStatus.Failure)
                     {
                         if (service.IsRequired(projectConfig)) overall = TTGInitializationStatus.Failure;
@@ -107,6 +125,7 @@ namespace TripleTapGames.Foundation
                     }
                 }
 
+                if (totalServices == 0) ReportProgress(1, 1, "Foundation", overall);
                 lastReport = new TTGInitializationReport(results, overall);
                 IsInitialized = overall != TTGInitializationStatus.Failure;
                 if (IsInitialized) OnInitialized?.Invoke();
@@ -156,6 +175,14 @@ namespace TripleTapGames.Foundation
             lastContext = null;
             lastRegistry = null;
             initializationTask = default;
+            CurrentProgress = default;
+        }
+
+        private static void ReportProgress(int completed, int total, string serviceName, TTGInitializationStatus status)
+        {
+            CurrentProgress = new TTGInitializationProgress(completed, total, serviceName, status);
+            try { OnProgressChanged?.Invoke(CurrentProgress); }
+            catch (Exception exception) { Debug.LogException(exception); }
         }
     }
 }

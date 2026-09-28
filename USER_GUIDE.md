@@ -2,6 +2,20 @@
 
 Prepared: 25 September 2026
 
+## Update: local Loading scene
+
+Use **Tools > Triple Tap Games > Project Setup > Create / Update Local Loading Scene** outside Play mode. It creates or updates `Assets/Scenes/Loading.unity`, preserves existing objects and the bootstrap sample, adds SingularSDKObject, and puts Loading first in Build Settings. Save unsaved Loading edits before running it. Fresh clones need to run this action because the credential-populated Loading scene is intentionally ignored by Git.
+
+**Apply Configuration** also updates Singular fields in the Loading scene. The object is saved inactive with Initialize On Awake and vendor debug logging disabled; TTG activates it after the integration is enabled and consent has resolved. A grey SingularSDKObject in the Hierarchy is expected. The package TTGBootstrap drives the generated progress bar and loads `Core` after a successful initialization pass. Required failures remain on Loading; consent-deferred services resume later when consent is submitted. See [Loading scene details](Packages/com.tripletapgames.foundation/Documentation~/LoadingScene.md).
+
+For Editor testing, the generated TTGConsentBootstrap applies development consent in `Awake` and logs `[TTG:Privacy]`. It never auto-grants consent in a device build. Production Loading waits for the host CMP to submit a normalized consent state through TTGConsentBootstrap or TTGPrivacy before SDK initialization continues.
+
+## Base game flow
+
+Save Core, then run **Tools > Triple Tap Games > Create or Update Base Game Flow**. Assign ordered level prefabs and stable IDs in `Assets/Game/Config/DefaultLevelSequence.asset`. Gameplay reports an outcome with `TTGGameFlow.Instance.WinLevel()` or `LoseLevel()`. The generated Win/Next and Lose/Retry panels handle navigation and persisted progress. TTG level events fan out to analytics providers, and GameAnalytics receives native progression Start/Complete/Fail events. See [Game flow details](Packages/com.tripletapgames.foundation/Documentation~/GameFlow.md).
+
+Do not force-add the populated scene to Git. The instructions below describing the original Main scene and manual sample bootstrap remain applicable only to projects that have not adopted the local Loading workflow.
+
 This guide describes the template currently saved at `/Users/pavanreddy/TTG-Unity-Template`. It describes the actual files and code, not everything proposed in the original implementation plan.
 
 ### Update: Firebase is a separate local installation
@@ -144,7 +158,7 @@ Keep debug logging limited during development and review vendor logging separate
 | --- | --- | --- |
 | Facebook | App ID, client token | Create/review Facebook's own settings; configure the game's platform entries |
 | Firebase | Analytics and Crashlytics toggles | Add this game's Android/iOS Firebase files and review native dependency resolution |
-| GameAnalytics | Separate Android/iOS game and secret keys | Configure the vendor's settings too: the current adapter checks TTG keys but does not copy them into GameAnalytics settings |
+| GameAnalytics | Separate Android/iOS game and secret keys | Enable the service and click Apply Configuration outside Play mode; TTG updates GameAnalytics settings and reapplies keys before initialization. See the GameAnalytics configuration guide in package Documentation~. |
 | AppLovin | SDK key, privacy policy URL | Review MAX Integration Manager settings, ad units and chosen mediation networks |
 | Singular | API key and API secret | Review attribution/platform setup; not all additional TTG Singular fields are wired into the runtime adapter |
 | IAP | Product IDs and product types | Configure matching products in the stores and implement game entitlement handling |
