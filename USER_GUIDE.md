@@ -12,7 +12,7 @@ For Editor testing, the generated TTGConsentBootstrap applies development consen
 
 ## Game-owned level flow
 
-Foundation does not create or replace the game's level sequence, save data, Win/Lose UI, Next, or Retry behavior. Keep the new game's own structure as the source of truth, then call TTG analytics and ad-gating APIs explicitly from its accepted lifecycle transitions. See the [analytics events guide](ANALYTICS_EVENTS_GUIDE.md) and [game integration guide](https://github.com/TripleTapGames/TTG-Unity-Foundation/blob/v0.2.0/Documentation~/GameFlow.md).
+Foundation does not create or replace the game's level sequence, save data, Win/Lose UI, Next, or Retry behavior. Keep the new game's own structure as the source of truth, then call TTG analytics and ad-gating APIs explicitly from its accepted lifecycle transitions. See the [analytics events guide](ANALYTICS_EVENTS_GUIDE.md) and [game integration guide](https://github.com/TripleTapGames/TTG-Unity-Foundation/blob/v0.2.1/Documentation~/GameFlow.md).
 
 Do not force-add the populated scene to Git. The instructions below describing the original Main scene and manual sample bootstrap remain applicable only to projects that have not adopted the local Loading workflow.
 
@@ -42,7 +42,7 @@ The original Pop Sort game has not been copied into this template. Its gameplay 
 | --- | --- |
 | Unity project | Empty starting scene, using Unity 2022.3.62f3 |
 | SDK dependencies | Installed asset SDKs and pinned package dependencies |
-| TTG Foundation | Git UPM package, version 0.2.0 |
+| TTG Foundation | Git UPM package, version 0.2.1 |
 | Configuration | Blank local project and advertising assets |
 | Initialization | `TTGInitializer` and an importable bootstrap example |
 | `TTManager.cs` | Not included |

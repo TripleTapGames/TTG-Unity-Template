@@ -5,7 +5,7 @@
     "com.gameanalytics.sdk": "8.2.0",
     "singular-unity-package": "https://github.com/singular-labs/Singular-Unity-SDK.git#5.10.1",
     "com.google.external-dependency-manager": "1.2.189",
-    "com.tripletapgames.foundation": "https://github.com/TripleTapGames/TTG-Unity-Foundation.git#v0.2.0",
+    "com.tripletapgames.foundation": "https://github.com/TripleTapGames/TTG-Unity-Foundation.git#v0.2.1",
     "com.unity.purchasing": "4.14.0",
     "com.unity.test-framework": "1.1.33",
     "com.unity.ugui": "1.0.0",
