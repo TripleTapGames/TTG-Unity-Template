@@ -10,9 +10,9 @@ Use **Tools > Triple Tap Games > Project Setup > Create / Update Local Loading S
 
 For Editor testing, the generated TTGConsentBootstrap applies development consent in `Awake` and logs `[TTG:Privacy]`. It never auto-grants consent in a device build. Production Loading waits for the host CMP to submit a normalized consent state through TTGConsentBootstrap or TTGPrivacy before SDK initialization continues.
 
-## Base game flow
+## Game-owned level flow
 
-Save Core, then run **Tools > Triple Tap Games > Create or Update Base Game Flow**. Assign ordered level prefabs and stable IDs in `Assets/Game/Config/DefaultLevelSequence.asset`. Gameplay reports an outcome with `TTGGameFlow.Instance.WinLevel()` or `LoseLevel()`. The generated Win/Next and Lose/Retry panels handle navigation and persisted progress. The flow does not emit analytics automatically; add explicit TTG analytics calls in game-owned scripts. See [Game flow details](Packages/com.tripletapgames.foundation/Documentation~/GameFlow.md).
+Foundation does not create or replace the game's level sequence, save data, Win/Lose UI, Next, or Retry behavior. Keep the new game's own structure as the source of truth, then call TTG analytics and ad-gating APIs explicitly from its accepted lifecycle transitions. See the [analytics events guide](ANALYTICS_EVENTS_GUIDE.md) and [game integration guide](https://github.com/TripleTapGames/TTG-Unity-Foundation/blob/v0.2.0/Documentation~/GameFlow.md).
 
 Do not force-add the populated scene to Git. The instructions below describing the original Main scene and manual sample bootstrap remain applicable only to projects that have not adopted the local Loading workflow.
 
@@ -42,7 +42,7 @@ The original Pop Sort game has not been copied into this template. Its gameplay 
 | --- | --- |
 | Unity project | Empty starting scene, using Unity 2022.3.62f3 |
 | SDK dependencies | Installed asset SDKs and pinned package dependencies |
-| TTG Foundation | Embedded package, version 0.1.0 |
+| TTG Foundation | Git UPM package, version 0.2.0 |
 | Configuration | Blank local project and advertising assets |
 | Initialization | `TTGInitializer` and an importable bootstrap example |
 | `TTManager.cs` | Not included |
