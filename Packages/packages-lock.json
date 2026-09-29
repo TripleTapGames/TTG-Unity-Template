@@ -31,13 +31,13 @@
       "url": "https://package.openupm.com"
     },
     "com.tripletapgames.foundation": {
-      "version": "https://github.com/TripleTapGames/TTG-Unity-Foundation.git#v0.1.4",
+      "version": "https://github.com/TripleTapGames/TTG-Unity-Foundation.git#v0.1.5",
       "depth": 0,
       "source": "git",
       "dependencies": {
         "com.unity.ugui": "1.0.0"
       },
-      "hash": "2799aff0a1ea5d6b7b67a4951e919007bca84368"
+      "hash": "2968163e2d0b41b70ada1759d7c4f1148d82a28a"
     },
     "com.unity.ext.nunit": {
       "version": "1.0.6",

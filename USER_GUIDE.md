@@ -221,6 +221,8 @@ Do not assume a successful initializer report proves consent compliance or that 
 
 ## 10. Send analytics events
 
+For copy-ready examples covering custom/design events, level progression, duration, milestones, retention, confirmed purchases, and AppLovin paid impressions, see the [analytics events guide](ANALYTICS_EVENTS_GUIDE.md).
+
 After configuration, consent handling and provider initialization, gameplay can use these APIs:
 
 ```csharp
