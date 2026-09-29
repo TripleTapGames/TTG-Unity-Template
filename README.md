@@ -13,7 +13,7 @@ A separate, empty Unity project for starting new games. Open with Unity **2022.3
 7. Assign ordered level prefabs and stable IDs in `Assets/Game/Config/DefaultLevelSequence.asset`. Gameplay reports outcomes through `TTGGameFlow.Instance.WinLevel()` or `LoseLevel()`.
 8. Follow each vendor's setup requirements, including Firebase configuration files, store products, advertising consent, and platform dependency resolution. Test on real devices before release.
 
-SDK installation does not activate services. Foundation integrations default to disabled. The generated Loading scene owns consent-aware initialization and progress UI, then enters Core. The base game flow provides prefab sequencing, Win/Lose UI and TTG level analytics; GameAnalytics receives native progression events. See the [complete user guide](USER_GUIDE.md).
+SDK installation does not activate services. Foundation integrations default to disabled. The generated Loading scene owns consent-aware initialization and progress UI, then enters Core. The base game flow provides prefab sequencing and Win/Lose UI; analytics events are explicitly called from game-owned scripts. `Assets/Game/Scripts/Analytics/AppLovinAdRevenueAnalytics.cs` forwards MAX paid impressions to TTG analytics on the Unity main thread. See the [complete user guide](USER_GUIDE.md).
 
 ## Installed SDKs
 

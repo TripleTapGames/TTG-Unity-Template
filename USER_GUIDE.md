@@ -12,7 +12,7 @@ For Editor testing, the generated TTGConsentBootstrap applies development consen
 
 ## Base game flow
 
-Save Core, then run **Tools > Triple Tap Games > Create or Update Base Game Flow**. Assign ordered level prefabs and stable IDs in `Assets/Game/Config/DefaultLevelSequence.asset`. Gameplay reports an outcome with `TTGGameFlow.Instance.WinLevel()` or `LoseLevel()`. The generated Win/Next and Lose/Retry panels handle navigation and persisted progress. TTG level events fan out to analytics providers, and GameAnalytics receives native progression Start/Complete/Fail events. See [Game flow details](Packages/com.tripletapgames.foundation/Documentation~/GameFlow.md).
+Save Core, then run **Tools > Triple Tap Games > Create or Update Base Game Flow**. Assign ordered level prefabs and stable IDs in `Assets/Game/Config/DefaultLevelSequence.asset`. Gameplay reports an outcome with `TTGGameFlow.Instance.WinLevel()` or `LoseLevel()`. The generated Win/Next and Lose/Retry panels handle navigation and persisted progress. The flow does not emit analytics automatically; add explicit TTG analytics calls in game-owned scripts. See [Game flow details](Packages/com.tripletapgames.foundation/Documentation~/GameFlow.md).
 
 Do not force-add the populated scene to Git. The instructions below describing the original Main scene and manual sample bootstrap remain applicable only to projects that have not adopted the local Loading workflow.
 
@@ -237,6 +237,8 @@ Use a consistent level identifier. Do not send the same event through both TTG a
 
 Events go to registered, initialized analytics providers. The current facade does not queue events sent before a provider is ready. An installed attribution SDK is not automatically a general analytics destination. Verify delivery in each intended vendor dashboard; a quiet Console is not proof of delivery.
 
+The template includes `Assets/Game/Scripts/Analytics/AppLovinAdRevenueAnalytics.cs`. It creates one persistent runtime bridge and subscribes to MAX interstitial, rewarded, banner, MREC and app-open paid-impression callbacks. MAX invokes those callbacks on a background thread, so the bridge queues normalized `TTGAdImpression` values and calls `TTGAnalytics.AdImpression` from Unity's main thread. Do not add another MAX revenue subscriber that reports the same impression.
+
 ## 11. Configure and show ads
 
 Select `TTAdsConfig.asset` and configure:
@@ -305,7 +307,7 @@ TTGIAP.Purchase("your_product_id", result =>
 
 Disable repeated taps while a purchase is pending. The current adapter stores callbacks by product ID; overlapping purchases of the same ID are not a supported robust flow.
 
-Success is reported from Unity IAP's purchase callback, not immediately from the button press. Backend receipt validation is not implemented. Purchase analytics are sent by the TTG facade on reported success; do not duplicate them unintentionally.
+Success is reported from Unity IAP's purchase callback, not immediately from the button press. Backend receipt validation is not implemented. The package does not emit purchase analytics automatically; call `TTGAnalytics.Purchase` from the successful project-side purchase callback if the game requires it.
 
 `TTGIAP.RestorePurchases(callback)` exists, but is not a complete entitlement restoration system. Its Boolean does not identify restored products, and on non-Apple targets the current adapter simply returns true. Restored/replayed purchases without a pending request are not delivered to your gameplay through a general entitlement event. Resolve these gaps before shipping non-consumables or subscriptions.
 
